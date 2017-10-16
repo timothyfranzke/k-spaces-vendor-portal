@@ -1,0 +1,117 @@
+/**
+ *  Do not remove this comments bellow. It's the markers used by wiredep to inject
+ *  sass dependencies when defined in the bower.json of your dependencies
+ */
+// bower:scss
+// endbower
+
+/**
+ *  Do not remove this comments bellow. It's the markers used by gulp-inject to inject
+ *  all your sass files automatically
+ */
+// injector
+// endinjector
+
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700|Titillium+Web:400,700');
+
+.manageRow{
+  color:#575757;
+  width: 96%;
+  padding: 10px 2%;
+
+nth-child(even){
+  background: #f0f6f7;
+}
+}
+.manageRowSpace{
+  color:#575757;
+  width: 96%;
+}
+
+.sectionHeaderMain{
+  h1{
+    font-size: 36px;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Titillium Web', sans-serif;
+}
+
+.ghostButton{
+  color: #9a9a9a;
+  font-size: 12px;
+  text-transform: uppercase;
+  border:1px solid #c8c8c8;
+  border-radius: 40px;
+  display: inline-block;
+  margin: 10px auto;
+  background:none;
+  width:auto;
+
+  text-align: center;
+  text-decoration: none;
+  transition: 0.5s ease;
+
+  hover{
+    color: #2a4362;
+    border-color: #2a4362;
+  }
+}
+
+.blueButton{
+  color: #FFFFFF ;
+  font-size: 12px;
+  text-transform: uppercase;
+  border:1px solid #6cc9d7 ;
+  border-radius: 40px;
+  display: inline-block;
+  margin: 10px auto;
+  background:#6cc9d7 ;
+  width:auto;
+  text-align: center;
+  text-decoration: none;
+  transition: 0.5s ease;
+  hover{
+    color: #6ad0e0 ;
+    border-color: #6ad0e0 ;
+  }
+}
+
+body{
+  background: #ecf1f4;
+  font-family: 'Open Sans', sans-serif;
+}
+
+
+.adminSidebarWrap{
+  width: 285px;
+  height: 100%;
+  position: absolute;
+  top:0;
+  left: 0;
+  background: #1d3450;
+}
+
+.adminSidebar{
+  background: #2a4362;
+  padding: 0 0 80px;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-decoration: none;
+}
+
+.adminLogo{
+  background-image: url('/assets/images/backgrounds/command-center.png');
+  height: 70px;
+}
+
+.blank_avatar {
+  border-radius: 50%;
+  height:200px;
+  width: 200px;
+}

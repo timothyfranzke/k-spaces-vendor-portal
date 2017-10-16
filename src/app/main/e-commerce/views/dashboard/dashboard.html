@@ -1,0 +1,322 @@
+<div id="dashboard-ecommerce" class="page-layout carded fullwidth" layout="row">
+  <div class="top-bg md-accent-bg"></div>
+  <!-- CENTER -->
+  <div class="center" flex ms-scroll>
+    <div class="header" layout="row" layout-align="space-between center">
+      <div class="white-fg" layout="column" layout-align="start start">
+        <div class="h1" layout="row" layout-align="start center">
+          <md-icon class="material-icons">account_balance</md-icon>
+          <span>Financial Dashboard</span>
+        </div>
+      </div>
+    </div>
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- WIDGET GROUP -->
+      <div class="widget-group" layout="row" flex="100" layout-wrap>
+
+        <!-- WIDGET 1 -->
+        <ms-widget flippable="true" layout="column" flex="100">
+
+          <!-- Front -->
+          <ms-widget-front class="white-bg">
+            <div class="ph-8 pv-16 h-55" layout="row" layout-align="space-between center">
+              <md-select class="simplified font-size-16" ng-model="vm.selectedPayPeriod" ng-change="vm.selectNewPeriod()"
+                         aria-label="Change range">
+                <md-option ng-repeat="period in vm.payPeriods"
+                           value="{{period._id}}">
+                  {{period.date | date:'MM/dd/yyyy'}}
+                </md-option>
+              </md-select>
+
+              <md-menu>
+                <md-button class="md-icon-button" ng-click="$mdOpenMenu()"
+                           aria-label="more">
+                  <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                </md-button>
+
+                <md-menu-content width="3">
+                  <md-menu-item>
+                    <md-button ng-click="flipWidget()" aria-label="Flip widget">
+                      Details
+                    </md-button>
+                  </md-menu-item>
+                  <md-menu-item>
+                    <md-button ng-click="refreshWidget()" aria-label="Refresh widget">
+                      Refresh
+                    </md-button>
+                  </md-menu-item>
+                </md-menu-content>
+              </md-menu>
+            </div>
+
+            <div class="pt-8 pb-32" layout="row" layout-align="space-around center" flex="100">
+              <div layout="column">
+                <div class="light-blue-fg font-size-72 line-height-72">
+                  {{vm.paymentTotal | currency}}
+                </div>
+                Expected Income
+              </div>
+              <md-divider vertical></md-divider>
+              <div layout="column">
+                <div layout="row" layout-align="start top">
+                  <div class="light-green-fg font-size-24">
+                    {{vm.paymentCollected | currency}}
+                  </div>
+                  <span>
+                    Paid
+                  </span>
+                </div>
+                <div layout="row" layout-align="start top">
+                  <div class="red-fg font-size-24">
+                    {{vm.paymentDue | currency}}
+                  </div>
+                  <span>
+                    Past Due
+                  </span>
+                </div>
+              </div>
+              <md-divider md-inset></md-divider>
+              <div layout="column" layout-align="start top">
+                <h3 class="grey-fg">
+                  Previous 3 Months
+                </h3>
+                <div class="grey-fg font-size-18">
+                  {{vm.threeMthCollected | currency}}
+                </div>
+                Paid
+                <div class="grey-fg font-size-18">
+                  {{vm.threeMthDue | currency}}
+                </div>
+              </div>
+                <div layout="column" layout-align="start top">
+                  <h3 class="grey-fg">
+                    YTD
+                  </h3>
+                  <div layout="row">
+                    <div class="grey-fg font-size-18">
+                      {{vm.ytdPaymentCollected | currency}}
+                    </div>
+                    Paid
+                  </div>
+                  <div layout="row">
+                    <div class="grey-fg font-size-18">
+                      {{vm.ytdPaymentDue | currency}}
+                    </div>
+                    Past Due
+                  </div>
+                </div>
+              </div>
+
+          </ms-widget-front>
+          <!-- / Front -->
+
+          <!-- Back -->
+          <ms-widget-back class="p-16 white-bg">
+            <div class="flip-to-front">
+              <md-button class="md-icon-button" ng-click="flipWidget()"
+                         aria-label="Flip widget">
+                <md-icon md-font-icon="icon-close" class="s16"></md-icon>
+              </md-button>
+            </div>
+
+            <div>
+              {{vm.widget1.detail}}
+            </div>
+          </ms-widget-back>
+          <!-- / Back -->
+
+        </ms-widget>
+        <!-- / WIDGET 1 -->
+
+        <ms-widget layout="column" flex="100">
+
+          <!-- Front -->
+          <ms-widget-front class="red-bg">
+            <div class="ph-8 pv-16 h-55" layout="row" layout-align="space-between center">
+              <span>
+                <md-icon class="material-icons red">error</md-icon>
+                <span class="white-text">Alert</span>
+              </span>
+              <md-divider></md-divider>
+              <div class="white-text">
+                You are waiting on overdue payments from <span ng-repeat="parent in vm.overdue.parents |limitTo:3">{{parent}}<span ng-show="!$last">, </span></span></span>
+                <span ng-if="vm.overdue.parents.length > 3"> and {{vm.overdue.parents.length - 3}} more</span>
+              </div>
+              <md-divider></md-divider>
+              <div>
+                <md-button>VIEW</md-button>
+                <md-button class="md-warn">DISMISS</md-button>
+              </div>
+            </div>
+          </ms-widget-front>
+          <!-- / Front -->
+
+          <!-- Back -->
+          <ms-widget-back class="p-16 white-bg">
+            <div class="flip-to-front">
+              <md-button class="md-icon-button" ng-click="flipWidget()"
+                         aria-label="Flip widget">
+                <md-icon md-font-icon="icon-close" class="s16"></md-icon>
+              </md-button>
+            </div>
+
+            <div>
+              {{vm.widget1.detail}}
+            </div>
+          </ms-widget-back>
+          <!-- / Back -->
+
+        </ms-widget>
+      </div>
+      <!-- / WIDGET GROUP -->
+      <!-- WIDGET GROUP -->
+      <div class="widget-group" layout="row" flex="100" layout-wrap>
+
+        <!-- WIDGET 1 -->
+        <ms-widget flippable="true" layout="column" flex="100" flex-gt-md="33">
+
+          <!-- Front -->
+          <ms-widget-front class="white-bg">
+            <div class="pt-8 pb-32" layout="column" layout-align="center center">
+              <div class="light-blue-fg font-size-24 line-height-72">
+                Manually Enter Payment
+              </div>
+            </div>
+          </ms-widget-front>
+        </ms-widget>
+        <!-- / WIDGET 1 -->
+
+        <!-- WIDGET 2 -->
+        <ms-widget flippable="true" layout="column" flex="100" flex-gt-md="33">
+
+          <!-- Front -->
+          <ms-widget-front class="white-bg">
+            <div class="pl-16 pr-8 pv-16 h-55" layout="row" layout-align="space-between center">
+              <div class="h3">{{vm.widget2.title}}</div>
+
+              <md-menu>
+                <md-button class="md-icon-button" ng-click="$mdOpenMenu()"
+                           aria-label="more">
+                  <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                </md-button>
+
+                <md-menu-content width="2">
+                  <md-menu-item>
+                    <md-button ng-click="flipWidget()" aria-label="Flip widget">
+                      Details
+                    </md-button>
+                  </md-menu-item>
+                  <md-menu-item>
+                    <md-button ng-click="refreshWidget()" aria-label="Refresh widget">
+                      Refresh
+                    </md-button>
+                  </md-menu-item>
+                </md-menu-content>
+              </md-menu>
+            </div>
+
+            <div class="pt-8 pb-32" layout="column" layout-align="center center">
+              <div class="red-fg font-size-72 line-height-72">
+                ${{vm.widget2.data.count}}
+              </div>
+              <div class="h3 secondary-text font-weight-500">{{vm.widget2.data.label}}</div>
+            </div>
+
+            <div class="p-16 grey-50-bg border-top" layout="row" layout-align="start center">
+              <span class="h4 secondary-text text-truncate">{{vm.widget2.data.extra.label}}:</span>
+              <span class="h4 ml-8">${{vm.widget2.data.extra.count}}</span>
+            </div>
+          </ms-widget-front>
+          <!-- / Front -->
+
+          <!-- Back -->
+          <ms-widget-back class="p-16 white-bg">
+            <div class="flip-to-front">
+              <md-button class="md-icon-button" ng-click="flipWidget()"
+                         aria-label="Flip widget">
+                <md-icon md-font-icon="icon-close" class="s16"></md-icon>
+              </md-button>
+            </div>
+
+            <div>
+              {{vm.widget2.detail}}
+            </div>
+          </ms-widget-back>
+          <!-- / Back -->
+
+        </ms-widget>
+        <!-- / WIDGET 2 -->
+
+        <!-- WIDGET 3 -->
+        <ms-widget flippable="true" layout="column" flex="100" flex-gt-md="33">
+
+          <!-- Front -->
+          <ms-widget-front class="white-bg">
+            <div class="pl-16 pr-8 pv-16 h-55" layout="row" layout-align="space-between center">
+              <div class="h3">{{vm.widget3.title}}</div>
+
+              <md-menu>
+                <md-button class="md-icon-button" ng-click="$mdOpenMenu()"
+                           aria-label="more">
+                  <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                </md-button>
+
+                <md-menu-content width="2">
+                  <md-menu-item>
+                    <md-button ng-click="flipWidget()" aria-label="Flip widget">
+                      Details
+                    </md-button>
+                  </md-menu-item>
+                  <md-menu-item>
+                    <md-button ng-click="refreshWidget()" aria-label="Refresh widget">
+                      Refresh
+                    </md-button>
+                  </md-menu-item>
+                </md-menu-content>
+              </md-menu>
+            </div>
+
+            <div class="pt-8 pb-32" layout="column" layout-align="center center">
+              <div class="orange-fg font-size-72 line-height-72">
+                {{vm.widget3.data.count}}
+              </div>
+              <div class="h3 secondary-text font-weight-500">{{vm.widget3.data.label}}</div>
+            </div>
+
+            <div class="p-16 grey-50-bg border-top" layout="row" layout-align="start center">
+              <span class="h4 secondary-text text-truncate">{{vm.widget3.data.extra.label}}:</span>
+              <span class="h4 ml-8">{{vm.widget3.data.extra.count}}</span>
+            </div>
+          </ms-widget-front>
+          <!-- / Front -->
+
+          <!-- Back -->
+          <ms-widget-back class="p-16 white-bg">
+            <div class="flip-to-front">
+              <md-button class="md-icon-button" ng-click="flipWidget()"
+                         aria-label="Flip widget">
+                <md-icon md-font-icon="icon-close" class="s16"></md-icon>
+              </md-button>
+            </div>
+
+            <div>
+              {{vm.widget3.detail}}
+            </div>
+          </ms-widget-back>
+          <!-- / Back -->
+
+        </ms-widget>
+        <!-- / WIDGET 3 -->
+
+      </div>
+      <!-- / WIDGET GROUP -->
+
+    </div>
+    <!-- / CONTENT -->
+
+  </div>
+  <!-- / CENTER -->
+
+</div>

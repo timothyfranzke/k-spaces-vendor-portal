@@ -1,0 +1,103 @@
+<div id="e-commerce-orders" class="page-layout carded fullwidth" layout="row">
+
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg md-accent-bg"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center" layout="column" flex>
+
+    <!-- CONTENT HEADER -->
+    <div class="header sectionHeaderMain" layout="row" layout-align="space-between center">
+      <div class="white-fg" layout="column" layout-align="start start">
+        <div class="h1" layout="row" layout-align="start center">
+          <md-icon class="material-icons">account_balance</md-icon>
+          <h1>Users</h1>
+        </div>
+        <div class="order-count secondary-text">
+          <span>Total Users:</span>
+          <span>{{vm.users.length}}</span>
+        </div>
+      </div>
+
+      <div class="search" layout="row" layout-align="start center" flex>
+        <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
+        <input id="e-commerce-products-search" class="search-input" type="text" placeholder="Search"
+               translate translate-attr-placeholder="EC.SEARCH" ng-model="vm.searchText" ng-change="vm.search()" flex>
+      </div>
+      <div>
+        <md-button class="blueButton" ng-click="vm.gotoUserCreate()">
+          <span translate="EC.ADD_USER">Add User</span>
+        </md-button>
+      </div>
+    </div>
+    <!-- / CONTENT HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content-card" layout="column" flex>
+
+      <!-- CONTENT TOOLBAR -->
+
+      <!-- / CONTENT TOOLBAR -->
+
+      <!-- CONTENT -->
+      <div class="content fullpage-datatable" layout="column" flex>
+
+        <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstance"
+               dt-options="vm.dtOptions">
+          <thead>
+          <tr>
+            <th></th>
+            <th class="secondary-text">
+              <div class="table-header">
+                <span class="column-title">Name</span>
+              </div>
+            </th>
+            <th class="secondary-text">
+              <div class="table-header">
+                <span class="column-title">Role</span>
+              </div>
+            </th>
+            <th class="secondary-text">
+              <div class="table-header">
+                <span class="column-title">Actions</span>
+              </div>
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="user in vm.users">
+            <td>
+              <img src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="!user.hasImage" />
+              <img data-ng-src="{{user.avatar.thumb}}" data-err-src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="user.hasImage" />
+            </td>
+            <td>
+              {{user.legal_name.first}} {{user.legal_name.last}}
+            </td>
+            <td>
+              {{user.role}}
+            </td>
+            <td>
+              <md-button class="edit-button md-icon-button" ng-click="vm.goToUserDetail(user._id)" aria-label="Location details"
+                         translate translate-attr-aria-label="EC.LOCATION_DETAILS">
+                <md-icon class="material-icons">edit</md-icon>
+              </md-button>
+              <md-button class="edit-button md-icon-button" ng-click="vm.deleteUser(user, $event)" aria-label="Location details"
+                         translate translate-attr-aria-label="EC.LOCATION_DETAILS">
+                <md-icon class="material-icons">delete</md-icon>
+              </md-button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+      </div>
+      <!-- / CONTENT -->
+
+    </div>
+    <!-- / CONTENT CARD -->
+
+  </div>
+  <!-- / CENTER -->
+
+</div>

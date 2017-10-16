@@ -1,0 +1,28 @@
+<div id="avatar-generator" layout="column">
+  <md-dialog aria-label="Find User" flex="40" layout-align="center">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Create Image</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon class="material-icons">close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content layout="column" layout-align="center" layout-padding flex>
+      <div>Select Image: <input type="file" id="fileInput" onchange="angular.element(this).scope().handleFileSelect(this.files)"/></div>
+      <div class="cropArea">
+        <img-crop image="myImage" result-image="myCroppedImage" ></img-crop>
+      </div>
+
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+      <md-button ng-click="select()">
+        SELECT
+      </md-button>
+      <md-button ng-click="cancel()">
+        CANCEL
+      </md-button>
+    </md-dialog-actions>
+  </md-dialog>
+</div>

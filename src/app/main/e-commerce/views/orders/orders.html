@@ -1,0 +1,103 @@
+<div id="e-commerce-orders" class="page-layout carded fullwidth" layout="row">
+
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg md-accent-bg"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center" layout="column" flex>
+
+        <!-- CONTENT HEADER -->
+        <div class="header" layout="row" layout-align="space-between center">
+            <div class="white-fg" layout="column" layout-align="start start">
+                <div class="h1" layout="row" layout-align="start center">
+                    <md-icon class="material-icons">shopping_cart</md-icon>
+                    <span translate="EC.PAYMENTS">Orders</span>
+                </div>
+                <div class="order-count secondary-text">
+                    <span translate="EC.TOTAL_ORDERS">Total orders:</span>
+                    <span>{{vm.orders.length}}</span>
+                </div>
+            </div>
+
+            <div class="search" layout="row" layout-align="start center" flex>
+                <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
+                <input id="e-commerce-products-search" class="search-input" type="text" placeholder="Search"
+                       translate translate-attr-placeholder="EC.SEARCH" flex>
+            </div>
+        </div>
+        <!-- / CONTENT HEADER -->
+
+        <!-- CONTENT CARD -->
+        <div class="content-card" layout="column" flex>
+
+            <!-- CONTENT TOOLBAR -->
+
+            <!-- / CONTENT TOOLBAR -->
+
+            <!-- CONTENT -->
+            <div class="content fullpage-datatable" layout="column" flex>
+
+                <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstance"
+                       dt-options="vm.dtOptions">
+                    <thead>
+                        <tr>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Parent</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Total</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Students</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Status</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Due Date</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Actions</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       <tr ng-repeat="parent in ::vm.parentUsers">
+                            <td>{{parent.legal_name.first}} {{parent.legal_name.last}}</td>
+                            <td>{{parent.total | currency}}</td>
+                            <td>{{parent.students.length}}</td>
+                            <td>2</td>
+                            <td class="date">{{parent.date_created | date : "MM/dd/yyyy"}}</td>
+                            <td>
+                                <md-button class="edit-button md-icon-button" ng-click="vm.gotoOrderDetail(parent._id, parent)" aria-label="Order details"
+                                           translate translate-attr-aria-label="EC.ORDER_DETAILS">
+                                    <md-icon class="material-icons s16">edit</md-icon>
+                                </md-button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <!-- / CONTENT -->
+
+        </div>
+        <!-- / CONTENT CARD -->
+
+    </div>
+    <!-- / CENTER -->
+
+</div>

@@ -1,0 +1,115 @@
+<div id="e-commerce-products" class="page-layout carded fullwidth" layout="row">
+
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg md-accent-bg"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center" layout="column" flex>
+
+        <!-- CONTENT HEADER -->
+        <div class="header sectionHeaderMain" layout="row" layout-align="space-between center">
+            <div class="white-fg" layout="column" layout-align="start start">
+                <div class="h1" layout="row" layout-align="start center">
+                    <md-icon md-font-icon="icon-cube-outline"></md-icon>
+                    <h1 translate="EC.TIERS">Pricing Tiers</h1>
+                </div>
+                <div class="product-count secondary-text">
+                    <span translate="EC.TOTAL_TIERS">Total Tiers:</span>
+                    <span>{{vm.products.length}}</span>
+                </div>
+            </div>
+
+            <div class="search" layout="row" layout-align="start center" flex>
+                <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
+                <input id="e-commerce-products-search" class="search-input" type="text" placeholder="Search"
+                       translate translate-attr-placeholder="EC.SEARCH" flex>
+            </div>
+
+            <div>
+                <md-button class="blueButton" ng-click="vm.gotoAddProduct()">
+                    <span translate="EC.ADD_TIER">Add Tier</span>
+                </md-button>
+            </div>
+        </div>
+        <!-- / CONTENT HEADER -->
+
+        <!-- CONTENT CARD -->
+        <div class="content-card" layout="column" flex>
+
+            <!-- CONTENT TOOLBAR -->
+
+            <!-- / CONTENT TOOLBAR -->
+
+            <!-- CONTENT -->
+            <div class="content fullpage-datatable" layout="column" flex>
+
+                <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstance"
+                       dt-options="vm.dtOptions">
+                    <thead>
+                        <tr>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Tier</span>
+                                </div>
+                            </th>
+                          <th class="secondary-text">
+                            <div class="table-header">
+                              <span class="column-title">Location</span>
+                            </div>
+                          </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Category</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Price</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Enrolled</span>
+                                </div>
+                            </th>
+                            <!--<th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Active</span>
+                                </div>
+                            </th>-->
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Actions</span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="product in ::vm.products" class="manageRow">
+                            <td>{{product.name}}</td>
+                            <td>{{product.location.name}}</td>
+                            <td>{{product.categories[0]}}</td>
+                            <td>{{product.priceTaxIncl | currency}}</td>
+                            <td>{{product.students.length}}</td>
+                           <!-- <td>{{product.active}}</td>-->
+                            <td>
+                                <md-button class="edit-button md-icon-button" ng-click="vm.gotoProductDetail(product._id)" aria-label="Product details"
+                                           translate translate-attr-aria-label="EC.PRODUCT_DETAILS">
+                                    <md-icon md-font-icon="icon-pencil" class="s16"></md-icon>
+                                </md-button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <!-- / CONTENT -->
+
+        </div>
+        <!-- / CONTENT CARD -->
+
+    </div>
+    <!-- / CENTER -->
+
+</div>

@@ -1,0 +1,239 @@
+<div id="location" class="page-layout carded fullwidth" layout="row">
+
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg md-accent-bg"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center" layout="column" flex>
+
+    <!-- CONTENT HEADER -->
+    <div class="header" layout="row" layout-align="space-between center">
+      <div class="white-fg" layout="column" layout-align="start start">
+        <div class="h1" layout="row" layout-align="start center">
+          <img ng-src="{{vm.location.avatar.thumb}}" width="100%" height="100%" ng-show="vm.location.hasImage" class="avatar"/>
+          <img ng-src="assets/images/avatars/profile.jpg" width="100%" height="100%" ng-show="!vm.location.hasImage" class="avatar"/>
+          <span>{{vm.location.name}}</span>
+        </div>
+        <div class="order-count secondary-text">
+          <span translate="EC.TOTAL_SPACES">Total Spaces:</span>
+          <span>{{vm.location.spaces.length}}</span>
+        </div>
+      </div>
+      <div>
+        <md-button type="submit" class="md-raised md-accent" aria-label="Submit"
+                   translate="EC.SAVE" ng-disabled="location.$invalid || location.$pristine" ng-click="vm.saveLocation()">
+          Save
+        </md-button>
+      </div>
+    </div>
+    <!-- / CONTENT HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content-card" layout="column" flex>
+
+      <!-- CONTENT TOOLBAR -->
+
+      <!-- / CONTENT TOOLBAR -->
+
+      <!-- CONTENT -->
+      <div class="content fullpage-datatable" layout="column" flex>
+        <form name="location" class="md-inline-form" novalidate>
+        <md-tabs md-dynamic-height>
+
+          <md-tab>
+            <md-tab-label>
+              <span translate="EC.LOCATION_DETAILS">Location Details</span>
+            </md-tab-label>
+            <md-tab-body>
+              <div class="form-wrapper md-whiteframe-1dp" flex>
+                <div class="form-title">Basic Location Details</div>
+                <div layout="column" layout-gt-sm="row">
+                  <div layout="row" flex="30">
+                    <div layout="row" ng-if="!!vm.image.full" layout-align="end">
+                      <img ng-src="{{vm.image.full}}" width="100%" height="100%" class="blank_avatar"/>
+                      <md-button ng-click="vm.createAvatar()" class="material-icons" style="right: 30px">edit</md-button>
+                    </div>
+                    <div layout="row" ng-if="!vm.image" layout-align="end">
+                      <img ng-src="{{vm.location.avatar.thumb}}" width="100%" height="100%" ng-show="vm.location.hasImage" class="blank_avatar"/>
+                      <img ng-src="assets/images/avatars/profile.jpg" width="100%" height="100%" ng-show="!vm.location.hasImage" class="blank_avatar"/>
+                      <md-button ng-click="vm.createAvatar()" class="material-icons" style="right: 30px">edit</md-button>
+                    </div>
+                  </div>
+                  <md-input-container flex="50">
+                    <input type="text" name="locationname" ng-model="vm.location.name"
+                           placeholder="Location Name"
+                           required>
+                    <div ng-messages="location.locationname.$error"
+                         role="alert">
+                      <div ng-message="required">
+                        <span>Location Name field is required.</span>
+                      </div>
+                    </div>
+                  </md-input-container>
+                </div>
+                <div layout="column" layout-gt-xs="row">
+                  <md-input-container flex>
+                    <label>Address</label>
+                    <input type="text" name="address" ng-model="vm.location.address">
+                  </md-input-container>
+                </div>
+                <div layout="column" layout-gt-xs="row">
+                  <md-input-container flex>
+                    <label>City</label>
+                    <input type="text" name="city" ng-model="vm.location.city">
+                  </md-input-container>
+
+                  <md-input-container flex>
+                    <label>State</label>
+                    <md-select ng-model="vm.location.state">
+                      <md-option ng-repeat="state in vm.states" value="{{state.abbrev}}">
+                        {{state.abbrev}}
+                      </md-option>
+                    </md-select>
+                  </md-input-container>
+                  <md-input-container flex>
+                    <label>Postal Code</label>
+                    <input name="postalcode" ng-model="vm.location.postalCode" placeholder="12345"
+                           required ng-pattern="/^[0-9]{5}$/" md-maxlength="5">
+                    <div ng-messages="location.postalcode.$error" role="alert" multiple>
+                      <div ng-message="required"><span>You must supply a postal code.</span></div>
+                      <div ng-message="pattern"><span>That doesn't look like a valid postal code.</span></div>
+                      <div ng-message="md-maxlength">
+                        <span>Postal code can't be longer than 5 characters.</span>
+                      </div>
+                    </div>
+                  </md-input-container>
+                </div>
+                <md-input-container class="md-block">
+                  <label>Description (optional)</label>
+                  <textarea ng-model="vm.location.description" md-maxlength="150" max-rows="5"></textarea>
+                </md-input-container>
+              </div>
+            </md-tab-body>
+          </md-tab>
+          <md-tab>
+            <md-tab-label>Hours of Operation</md-tab-label>
+            <md-tab-body>
+              <div class="form-wrapper md-whiteframe-1dp" flex>
+                <div class="form-title">Hours of Operation</div>
+                <div layout="column" layout-gt-xs="row">
+                  <md-input-container flex>
+                    <label>Open</label>
+                    <input type="time" name="open" ng-model="vm.location.hours.open">
+                  </md-input-container>
+                  <md-input-container flex>
+                    <label>Close</label>
+                    <input type="time" name="close" ng-model="vm.location.hours.close">
+                  </md-input-container>
+                </div>
+                <div layout="row" layout-padding>
+                  <md-checkbox ng-model="vm.location.days_of_week.sunday">
+                    Su
+                  </md-checkbox>
+                  <md-checkbox ng-model="vm.location.days_of_week.monday">
+                    M
+                  </md-checkbox>
+                  <md-checkbox ng-model="vm.location.days_of_week.tuesday">
+                    Tu
+                  </md-checkbox>
+                  <md-checkbox ng-model="vm.location.days_of_week.wednesday">
+                    W
+                  </md-checkbox>
+                  <md-checkbox ng-model="vm.location.days_of_week.thursday">
+                    Th
+                  </md-checkbox>
+                  <md-checkbox ng-model="vm.location.days_of_week.friday">
+                    F
+                  </md-checkbox>
+                  <md-checkbox ng-model="vm.location.days_of_week.saturday">
+                    Sa
+                  </md-checkbox>
+                </div>
+              </div>
+            </md-tab-body>
+            </md-tab>
+          </md-tab>
+          <md-tab>
+            <md-tab-label>
+              <span translate="EC.LOCATION_SPACES">Spaces</span>
+            </md-tab-label>
+            <md-tab-body>
+              <div class="order-detail-form-container customer md-background-bg md-whiteframe-1dp">
+                <div class="pb-16" layout="row" layout-align="start center">
+                  <md-icon md-font-icon="icon-account" class="m-0 mr-16"></md-icon>
+                  <div class="h2 secondary-text" translate="EC.SPACE">SPACE</div>
+                </div>
+                <div class="form-title">Spaces</div>
+                <md-autocomplete
+                  ng-disabled="false"
+                  md-no-cache="true"
+                  md-selected-item="vm.selectedSpace"
+                  md-search-text="vm.searchText"
+                  md-selected-item-change="vm.selectSpace()"
+                  md-items="space in vm.spaces"
+                  md-item-text="space.name"
+                  md-min-length="0"
+                  placeholder="Search Spaces">
+                  <md-item-template>
+                    <span md-highlight-text="vm.searchText" md-highlight-flags="^i">{{space.name}}</span>
+                  </md-item-template>
+                  <div ng-messages="searchForm.autocompleteField.$error" ng-if="searchForm.autocompleteField.$touched">
+                    <div ng-message="required">You <b>must</b> have a favorite state.</div>
+                    <div ng-message="md-require-match">Please select an existing state.</div>
+                    <div ng-message="minlength">Your entry is not long enough.</div>
+                    <div ng-message="maxlength">Your entry is too long.</div>
+                  </div>
+                </md-autocomplete>
+                <div class="content fullpage-datatable" layout="column" flex>
+                  <table class="dataTable row-border hover">
+                    <thead>
+                    <tr>
+                      <th></th>
+                      <th class="secondary-text">
+                        <div class="table-header">
+                          <span class="column-title">Name</span>
+                        </div>
+                      </th>
+                      <th class="secondary-text">
+                        <div class="table-header">
+                          <span class="column-title">Actions</span>
+                        </div>
+                      </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="space in vm.locationSpaces">
+                      <td>
+                        <img src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="!location.hasImage" />
+                        <img data-ng-src="{{space.avatar.thumb}}" data-err-src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="location.hasImage" />
+                      </td>
+                      <td>
+                        {{space.name}}
+                      </td>
+                      <td>
+                        <md-button class="edit-button md-icon-button" ng-click="vm.removeSpaceFromLocation(space._id)" aria-label="Space details"
+                                   translate translate-attr-aria-label="EC.LOCATION_DETAILS">
+                          <md-icon class="material-icons">close</md-icon>
+                        </md-button>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+
+                </div>
+              </div>
+              </md-tab-body>
+            </md-tab>
+          </md-tabs>
+        </form>
+      </div>
+      <!-- / CONTENT -->
+
+    </div>
+    <!-- / CONTENT CARD -->
+
+  </div>
+  <!-- / CENTER -->
+
+</div>

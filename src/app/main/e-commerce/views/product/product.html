@@ -1,0 +1,271 @@
+<div id="e-commerce-product" class="page-layout simple tabbed" layout="column">
+
+    <!-- HEADER -->
+    <div class="header md-accent-bg" layout="row" layout-align="start center">
+        <div class="white-fg" layout="row" layout-align="start center" flex>
+            <md-button class="goto-products-button md-icon-button" aria-label="Go to products"
+                       ng-click="vm.gotoProducts()"
+                       translate translate-attr-aria-label="EC.GO_TO_PRODUCTS">
+                <md-icon md-font-icon="icon-arrow-left"></md-icon>
+            </md-button>
+
+            <div layout="row" layout-align="start center">
+                <div class="product-image" hide-xs>
+                    <img ng-src="{{vm.product.images[0].url}}">
+                </div>
+
+                <div layout="column" layout-align="start start">
+                    <div class="h2">
+                        {{vm.product.name}}
+                    </div>
+                    <div class="subtitle secondary-text">
+                        <span translate="EC.PRODUCT_DETAIL">Space Detail</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <md-button class="md-raised md-background" ng-click="vm.saveProduct()"
+                       ng-disabled="!vm.isFormValid('productForm')">
+                <span translate="EC.SAVE">SAVE</span>
+            </md-button>
+        </div>
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT -->
+    <div class="content">
+
+        <md-tabs md-dynamic-height>
+
+            <md-tab>
+                <md-tab-label>
+                    <span translate="EC.BASIC_INFO">Basic Info</span>
+                </md-tab-label>
+
+                <md-tab-body>
+                    <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
+                        <form id="productForm" name="productForm">
+                            <md-input-container class="md-block">
+                                <label translate="EC.PRODUCT_NAME">Space Name</label>
+                                <input type="text" ng-model="vm.product.name" required>
+                            </md-input-container>
+
+                            <!--<h3 class="secondary-text" translate="EC.PRODUCT_DESCRIPTION">Space Description</h3>
+                            <text-angular ta-toolbar="vm.taToolbar" ng-model="vm.product.description"
+                                          class="pb-32"></text-angular>-->
+
+                          <md-input-container class="md-block md-icon-float" flex="35">
+                            <label translate="EC.NEXT_TIER">Next Tier</label>
+                            <md-select ng-model="vm.product.next_tier">
+                              <md-option ng-repeat="tier in ::vm.products" ng-value="tier">
+                                {{tier.name}}
+                              </md-option>
+                            </md-select>
+                          </md-input-container>
+                          <md-input-container class="md-block" ng-show="!!vm.product.next_tier" flex="35">
+                            <label translate="EC.TIER_CUT_OFF">Age Cut Off (Months)</label>
+                            <input type="number" ng-model="vm.product.next_tier.cut_off_age">
+                          </md-input-container>
+                          <md-checkbox ng-model="vm.product.next_tier.auto_enroll" ang-show="!!vm.product.next_tier" ria-label="Auto enroll">
+                            <label translate="EC.TIER_AUTO_MOVE">Automatically Enroll on Cut Off</label>
+                          </md-checkbox>
+
+
+                           <!-- <md-input-container class="md-block">
+                                <label translate="EC.CATEGORIES">Categories</label>
+                                <md-select ng-model="vm.product.categories"
+                                           md-on-open="vm.onCategoriesSelectorOpen()"
+                                           md-on-close="vm.onCategoriesSelectorClose()" multiple>
+                                    <md-select-header>
+                                        <input type="search" class="md-text"
+                                               ng-model="vm.categoriesSelectFilter" placeholder="Search for a category">
+                                    </md-select-header>
+                                    <md-optgroup>
+                                        <md-option ng-value="category"
+                                                   ng-repeat="category in vm.product.categories | filter:vm.categoriesSelectFilter">
+                                            {{category}}
+                                        </md-option>
+                                    </md-optgroup>
+                                </md-select>
+                            </md-input-container>-->
+                        </form>
+                    </div>
+                </md-tab-body>
+            </md-tab>
+
+            <!--<md-tab>
+                <md-tab-label>
+                    <span translate="EC.SPACES_IMAGES">Space Images</span>
+                </md-tab-label>
+
+                <md-tab-body>
+                    <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
+
+                        <div id="product-image-uploader"
+                             flow-init="vm.ngFlowOptions"
+                             flow-name="vm.ngFlow.flow"
+                             flow-files-submitted="vm.upload()"
+                             flow-file-added="vm.fileAdded($file)"
+                             flow-file-success="vm.fileSuccess($file, $message)"
+                             flow-complete="vm.uploadComplete()"
+                             flow-drop
+                             flow-drag-enter="vm.dropping=true"
+                             flow-drag-leave="vm.dropping=false"
+                             ng-class="{'dropping':vm.dropping}">
+
+                            <div class="drop-text hint-text" layout="row" layout-align="center center">
+                                <span translate="EC.DROP_TO_UPLOAD">Drop to upload</span>
+                            </div>
+
+                            <div class="upload-button" layout="column" layout-align="center center">
+                                <md-button class="md-accent md-raised" flow-btn>
+                                    Upload
+                                </md-button>
+                                <span class="secondary-text mt-8">You can also drop images here to upload. Only PNG, JPG - Max. 8MB</span>
+                            </div>
+
+                            <div class="mv-32" layout="row" layout-align="center center">
+                                <div class="image-zoom-area">
+                                    <img wip-image-zoom="vm.imageZoomOptions">
+                                </div>
+                            </div>
+
+                            <div layout="row" layout-align="start start" layout-wrap>
+                                <div ng-repeat="image in vm.product.images" ng-switch="image.type">
+                                    <div class="product-image uploading" ng-switch-when="uploading" layout="row"
+                                         layout-align="center center">
+                                        <div class="overlay" layout="column" layout-align="center center">
+                                            <md-progress-linear md-mode="determinate"
+                                                                value="{{image.file.progress() * 100}}">
+                                            </md-progress-linear>
+                                        </div>
+                                        <img class="media" flow-img="image.file">
+                                    </div>
+
+                                    <div class="product-image" ng-switch-when="image" layout="row"
+                                         layout-align="center center">
+                                        <img class="media" ng-src="{{image.url}}"
+                                             ng-click="vm.updateImageZoomOptions(image.url)">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-8 font-size-12" layout="row" layout-align="center center">
+                                Click on images to activate the zoom!
+                            </div>
+                        </div>
+                    </div>
+                </md-tab-body>
+            </md-tab>-->
+
+            <md-tab>
+                <md-tab-label>
+                    <span translate="EC.PRICING">Tuition</span>
+                </md-tab-label>
+
+                <md-tab-body>
+                    <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
+                        <form>
+                            <md-input-container class="md-block md-icon-float">
+                                <label translate="EC.TAX_INCL_PRICE">Tuition Cost</label>
+                                <md-icon md-font-icon="icon icon-currency-usd"></md-icon>
+                                <input type="number" step="0.01" ng-model="vm.product.priceTaxIncl">
+                            </md-input-container>
+
+                            <md-input-container class="md-block md-icon-float">
+                                <label translate="EC.TAX_RATE">Tax Rate</label>
+                                <md-icon md-font-icon="icon icon-percent"></md-icon>
+                                <input type="number" step="0.01" ng-model="vm.product.taxRate">
+                            </md-input-container>
+
+                          <md-input-container class="md-block md-icon-float" flex="35">
+                            <label translate="EC.OCCURENCE">Payment Occurence</label>
+                            <md-select ng-model="vm.product.occurence.type">
+                              <md-option ng-repeat="occurence in vm.occurenceTypes" ng-value="occurence">
+                                {{occurence}}
+                              </md-option>
+                            </md-select>
+                          </md-input-container>
+
+                          <md-input-container class="md-block md-icon-float" ng-show="vm.product.occurence.type == 'Monthly (specific day)'">
+                            <label translate="EC.OCCURENCE_DAY">Occurs on Day</label>
+                            <input type="number" step="1" min="1" max="28" ng-model="vm.product.occurence.day">
+                          </md-input-container>
+                        </form>
+                    </div>
+                </md-tab-body>
+            </md-tab>
+          <md-tab>
+            <md-tab-label>
+              <span translate="EC.STUDENTS">Faculty</span>
+            </md-tab-label>
+
+            <md-tab-body>
+              <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
+                <form>
+                  <div layout="row" layout-align="space-between start" >
+                    <md-autocomplete
+                      flex="100"
+                      md-no-cache="true"
+                      md-selected-item="selectedItem"
+                      md-search-text-change="vm.search(searchText)"
+                      md-search-text="searchText"
+                      md-selected-item-change="vm.selectItem(item)"
+                      md-items="item in vm.items"
+                      md-item-text="item.legal_name.first"
+                      md-min-length="0"
+                      placeholder="Add Student (Search Student Name)">
+                      <md-item-template>
+                        <span md-highlight-text="searchText" md-highlight-flags="^i">{{item.legal_name.first}} {{item.legal_name.last}}</span>
+                      </md-item-template>
+                      <md-not-found>
+                        No users matching "{{searchText}}" were found.
+                      </md-not-found>
+                    </md-autocomplete>
+                  </div>
+                </form>
+              </div>
+              <div class="content fullpage-datatable" layout="column" flex>
+
+                <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstance"
+                       dt-options="vm.dtTierStudents">
+                  <thead>
+                  <tr>
+                    <th class="secondary-text">
+                      <div class="table-header">
+                        <span class="column-title">Student</span>
+                      </div>
+                    </th>
+                    <th class="secondary-text">
+                      <div class="table-header">
+                        <span class="column-title">Actions</span>
+                      </div>
+                    </th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr ng-repeat="student in vm.product.students" class="manageRow">
+                    <td>{{student.legal_name.first}} {{student.legal_name.last}}</td>
+                    <td>
+                      <md-button class="edit-button md-icon-button" aria-label="Product details" ng-click="vm.removeStudent(student._id)"
+                                 translate translate-attr-aria-label="EC.PRODUCT_DETAILS">
+                        <md-icon md-font-icon="icon-close" class="s16"></md-icon>
+                      </md-button>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+
+              </div>
+            </md-tab-body>
+          </md-tab>
+        </md-tabs>
+
+      </md-tabs>
+
+    </div>
+    <!-- / CONTENT -->
+
+</div>

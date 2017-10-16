@@ -1,0 +1,249 @@
+<div id="space" class="page-layout carded fullwidth" layout="row">
+
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg md-accent-bg"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center" layout="column" flex>
+
+    <!-- CONTENT HEADER -->
+    <div class="header" layout="row" layout-align="space-between center">
+      <div class="white-fg" layout="column" layout-align="start start">
+        <div class="h1" layout="row" layout-align="start center">
+          <img ng-src="{{vm.space.avatar.thumb}}" width="100%" height="100%" ng-show="vm.space.hasImage" class="avatar"/>
+          <img ng-src="assets/images/avatars/profile.jpg" width="100%" height="100%" ng-show="!vm.space.hasImage" class="avatar"/>
+          <span>{{vm.space.name}}</span>
+        </div>
+        <div class="order-count secondary-text">
+          <span translate="EC.TOTAL_SPACES">Total Spaces:</span>
+
+        </div>
+      </div>
+      <div>
+        <md-button type="submit" class="md-raised md-accent" aria-label="Submit"
+                   translate="EC.SAVE" ng-disabled="location.$invalid || location.$pristine" ng-click="vm.saveSpace()">
+          Save
+        </md-button>
+      </div>
+    </div>
+    <!-- / CONTENT HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content-card" layout="column" flex>
+
+      <!-- CONTENT TOOLBAR -->
+
+      <!-- / CONTENT TOOLBAR -->
+
+      <!-- CONTENT -->
+      <div class="content fullpage-datatable" layout="column" flex>
+        <form name="space" class="md-inline-form" novalidate>
+          <md-tabs md-dynamic-height>
+
+            <md-tab>
+              <md-tab-label>
+                <span>Space Details</span>
+              </md-tab-label>
+              <md-tab-body>
+                <div class="form-wrapper md-whiteframe-1dp" flex>
+                  <div class="form-title">Space Details</div>
+                  <div layout="column" layout-gt-sm="row">
+                    <div layout="row" flex="30">
+                      <div layout="row" ng-if="!!vm.image.full" layout-align="end">
+                        <img ng-src="{{vm.image.full}}" width="100%" height="100%" class="blank_avatar"/>
+                        <md-button ng-click="vm.createAvatar()" class="material-icons" style="right: 30px">edit</md-button>
+                      </div>
+                      <div layout="row" ng-if="!vm.image" layout-align="end">
+                        <img ng-src="{{vm.space.avatar.thumb}}" width="100%" height="100%" ng-show="vm.space.hasImage" class="blank_avatar"/>
+                        <img ng-src="assets/images/avatars/profile.jpg" width="100%" height="100%" ng-show="!vm.space.hasImage" class="blank_avatar"/>
+                        <md-button ng-click="vm.createAvatar()" class="material-icons" style="right: 30px">edit</md-button>
+                      </div>
+                    </div>
+                    <md-input-container flex="50">
+                      <input type="text" name="spacename" ng-model="vm.space.name"
+                             placeholder="Space Name"
+                             required>
+                      <div ng-messages="space.spacename.$error"
+                           role="alert">
+                        <div ng-message="required">
+                          <span>Space Name field is required.</span>
+                        </div>
+                      </div>
+                    </md-input-container>
+                  </div>
+                  <div layout="column" layout-gt-sm="row">
+                    <md-input-container flex>
+                      <label>Location</label>
+                      <md-select ng-model="vm.space.location_id">
+                        <md-option ng-repeat="location in vm.locations" value="{{location._id}}">
+                          {{location.name}}
+                        </md-option>
+                      </md-select>
+                    </md-input-container>
+                  </div>
+
+                  <div layout="column" layout-gt-sm="row">
+                    <md-input-container flex="50">
+                      <input type="number" name="spacefaculty" ng-model="vm.space.required_faculty"
+                             placeholder="Required Number of Faculty">
+                      </md-input-container>
+                    <md-input-container flex="50">
+                      <input type="number" name="spacestudent" ng-model="vm.space.max_students"
+                             placeholder="Maximum Number of Student">
+                    </md-input-container>
+                  </div>
+                  <md-input-container class="md-block">
+                    <label>Description (optional)</label>
+                    <textarea ng-model="vm.space.description" md-maxlength="150" max-rows="5"></textarea>
+                  </md-input-container>
+                </div>
+              </md-tab-body>
+            </md-tab>
+            </md-tab>
+            <md-tab>
+              <md-tab-label>
+                <span translate="EC.FACULTY">Faculty</span>
+              </md-tab-label>
+              <md-tab-body>
+                <div class="order-detail-form-container customer md-background-bg md-whiteframe-1dp">
+                  <div class="form-title">Faculty</div>
+                  <md-autocomplete
+                    ng-disabled="false"
+                    md-no-cache="true"
+                    md-selected-item="vm.selectedItem"
+                    md-search-text="vm.searchText"
+                    md-selected-item-change="vm.selectFaculty(faculty)"
+                    md-items="faculty in vm.facultyUsers"
+                    md-item-text="faculty.legal_name.first"
+                    md-min-length="0"
+                    placeholder="Search Faculty">
+                    <md-item-template>
+                      <span md-highlight-text="vm.searchText" md-highlight-flags="^i">{{faculty.legal_name.first}} {{faculty.legal_name.last}}</span>
+                    </md-item-template>
+                    <div ng-messages="searchForm.autocompleteField.$error" ng-if="searchForm.autocompleteField.$touched">
+                      <div ng-message="required">You <b>must</b> have a favorite state.</div>
+                      <div ng-message="md-require-match">Please select an existing state.</div>
+                      <div ng-message="minlength">Your entry is not long enough.</div>
+                      <div ng-message="maxlength">Your entry is too long.</div>
+                    </div>
+                  </md-autocomplete>
+                  <div class="content fullpage-datatable" layout="column" flex>
+                    <table class="dataTable row-border hover">
+                      <thead>
+                      <tr>
+                        <th></th>
+                        <th class="secondary-text">
+                          <div class="table-header">
+                            <span class="column-title">Name</span>
+                          </div>
+                        </th>
+                        <th class="secondary-text">
+                          <div class="table-header">
+                            <span class="column-title">Actions</span>
+                          </div>
+                        </th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr ng-repeat="user in vm.spaceFaculty">
+                        <td>
+                          <img src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="!location.hasImage" />
+                          <img data-ng-src="{{user.avatar.thumb}}" data-err-src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="location.hasImage" />
+                        </td>
+                        <td>
+                          {{user.legal_name.first}} {{user.legal_name.last}}
+                        </td>
+                        <td>
+                          <md-button class="edit-button md-icon-button" ng-click="vm.removeFacultyFromSpace(user._id)" aria-label="Space details"
+                                     translate translate-attr-aria-label="EC.LOCATION_DETAILS">
+                            <md-icon class="material-icons">close</md-icon>
+                          </md-button>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+
+                  </div>
+                </div>
+              </md-tab-body>
+            </md-tab>
+            <md-tab>
+              <md-tab-label>
+                <span>Student</span>
+              </md-tab-label>
+              <md-tab-body>
+                <div class="order-detail-form-container customer md-background-bg md-whiteframe-1dp">
+                  <div class="form-title">Students</div>
+                  <md-autocomplete
+                    ng-disabled="false"
+                    md-no-cache="true"
+                    md-selected-item="vm.selectedStudent"
+                    md-search-text="vm.searchText"
+                    md-selected-item-change="vm.selectStudent(student)"
+                    md-items="student in vm.studentUsers"
+                    md-item-text="student.legal_name.first"
+                    md-min-length="0"
+                    placeholder="Search Students">
+                    <md-item-template>
+                      <span md-highlight-text="vm.searchText" md-highlight-flags="^i">{{student.legal_name.first}} {{student.legal_name.last}}</span>
+                    </md-item-template>
+                    <div ng-messages="searchForm.autocompleteField.$error" ng-if="searchForm.autocompleteField.$touched">
+                      <div ng-message="required">You <b>must</b> have a favorite state.</div>
+                      <div ng-message="md-require-match">Please select an existing state.</div>
+                      <div ng-message="minlength">Your entry is not long enough.</div>
+                      <div ng-message="maxlength">Your entry is too long.</div>
+                    </div>
+                  </md-autocomplete>
+                  <div class="content fullpage-datatable" layout="column" flex>
+                    <table class="dataTable row-border hover">
+                      <thead>
+                      <tr>
+                        <th></th>
+                        <th class="secondary-text">
+                          <div class="table-header">
+                            <span class="column-title">Name</span>
+                          </div>
+                        </th>
+                        <th class="secondary-text">
+                          <div class="table-header">
+                            <span class="column-title">Actions</span>
+                          </div>
+                        </th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr ng-repeat="user in vm.spaceStudents">
+                        <td>
+                          <img src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="!location.hasImage" />
+                          <img data-ng-src="{{user.avatar.thumb}}" data-err-src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="location.hasImage" />
+                        </td>
+                        <td>
+                          {{user.legal_name.first}} {{user.legal_name.last}}
+                        </td>
+                        <td>
+                          <md-button class="edit-button md-icon-button" ng-click="vm.removeStudentFromSpace(user._id)" aria-label="Space details"
+                                     translate translate-attr-aria-label="EC.LOCATION_DETAILS">
+                            <md-icon class="material-icons">close</md-icon>
+                          </md-button>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+
+                  </div>
+                </div>
+              </md-tab-body>
+            </md-tab>
+          </md-tabs>
+        </form>
+      </div>
+      <!-- / CONTENT -->
+
+    </div>
+    <!-- / CONTENT CARD -->
+
+  </div>
+  <!-- / CENTER -->
+
+</div>

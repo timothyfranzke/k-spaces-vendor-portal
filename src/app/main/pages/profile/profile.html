@@ -1,0 +1,50 @@
+<div id="profile" class="page-layout simple tabbed">
+
+    <!-- HEADER -->
+    <div class="header md-accent-bg" layout="column" layout-align="center center" layout-gt-sm="row" layout-align-gt-sm="space-between end">
+        <div class="user-info" layout="column" layout-align="center center" layout-gt-sm="row" layout-align-gt-sm="start center">
+            <img src="assets/images/avatars/profile.jpg" class="blank_avatar" ng-show="!vm.about.hasImage" />
+            <img data-ng-src="{{vm.about.avatar.full}}" data-err-src="assets/images/avatars/profile.jpg" class="blank_avatar" ng-show="vm.about.hasImage" />
+          <md-button ng-click="vm.createAvatar()"
+                     aria-label="Add event" translate translate-attr-aria-label="CALENDAR.ADD_EVENT">
+            <md-icon class="material-icon">edit</md-icon>
+          </md-button>
+          <div class="name">{{vm.about.legal_name.first}} {{vm.about.legal_name.last}}</div>
+          <md-button ng-click="vm.openNameDialog($event)"
+                     aria-label="Add event" translate translate-attr-aria-label="CALENDAR.ADD_EVENT">
+            <md-icon class="material-icon">edit</md-icon>
+          </md-button>
+        </div>
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT -->
+    <div class="content" flex>
+
+        <md-tabs md-dynamic-height>
+          <md-tab>
+            <md-tab-label>
+              <span translate="PROFILE.TIMELINE">Timeline</span>
+            </md-tab-label>
+            <md-tab-body>
+              <md-content class="timeline-tab"
+                          ng-include="'app/main/pages/profile/tabs/timeline/timeline.html'">
+              </md-content>
+            </md-tab-body>
+          </md-tab>
+          <md-tab>
+            <md-tab-label>
+              <span translate="PROFILE.ABOUT">About</span>
+            </md-tab-label>
+            <md-tab-body>
+              <md-content class="about-tab"
+                          ng-include="'app/main/pages/profile/tabs/about/about.html'">
+              </md-content>
+            </md-tab-body>
+          </md-tab>
+        </md-tabs>
+
+    </div>
+    <!-- / CONTENT -->
+
+</div>

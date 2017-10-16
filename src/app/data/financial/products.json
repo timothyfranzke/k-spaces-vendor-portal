@@ -1,0 +1,128 @@
+{
+    "data": [
+        {
+            "_id": "58ececde27667b0004d92d85",
+            "name": "Infant",
+            "description": "Ages 3 to 12 months",
+            "categories": [
+                "Infant"
+            ],
+            "previous_tier":null,
+            "next_tier":{
+              "_id": "58ececde27667b0004d92d85",
+              "name": "Toddler - 1 year",
+              "cut_off_age":{
+                "months": 12
+              }
+            },
+            "location":{
+              "_id":"58dd4dfeb5582720e926dc50",
+              "name":"Canterbury West"
+            },
+            "tags": [
+                "toddlers"
+            ],
+            "priceTaxExcl": 1395,
+            "priceTaxIncl": 1395,
+            "taxRate": 0,
+            "totalEnrollment": 15,
+            "active": true
+        },
+        {
+          "_id": "58ececde27667b0004d92d85",
+          "name": "Todder - 1 year",
+          "description": "Ages 1 to 2 years",
+          "categories": [
+            "Toddler"
+          ],
+          "previous_tier":{
+            "_id": "58ececde27667b0004d92d85",
+            "name":"Infant",
+            "cut_off_age":{
+              "months": 12
+            }
+          },
+          "next_tier":{
+            "_id": "58ececde27667b0004d92d85",
+            "name":"Toddler - 2 year",
+            "cut_off_age":{
+              "months": 24
+            }
+          },
+          "location":{
+            "_id":"58dd4dfeb5582720e926dc50",
+            "name":"Canterbury West"
+          },
+          "tags": [
+            "toddlers"
+          ],
+          "priceTaxExcl": 1100,
+          "priceTaxIncl": 1100,
+          "taxRate": 0,
+          "totalEnrollment": 9,
+          "active": true
+        },
+      {
+        "_id": "58ececde27667b0004d92d85",
+        "name":"Toddler - 2 year",
+        "description": "Ages 2 to 4 years",
+        "categories": [
+          "Pre-K"
+        ],
+        "previous_tier":{
+          "_id": "58ececde27667b0004d92d85",
+          "name":"Todder - 1 year",
+          "cut_off_age":{
+            "months": 24
+          }
+        },
+        "next_tier":{
+          "_id": "58ececde27667b0004d92d85",
+          "name":"Pre-K",
+          "cut_off_age":{
+            "months": 48
+          }
+        },
+        "location":{
+          "_id":"58dd4dfeb5582720e926dc50",
+          "name":"Canterbury West"
+        },
+        "tags": [
+          "toddlers"
+        ],
+        "priceTaxExcl": 930,
+        "priceTaxIncl": 930,
+        "taxRate": 0,
+        "totalEnrollment": 9,
+        "active": true
+      },
+      {
+        "_id": "58ececde27667b0004d92d85",
+        "name":"Pre-K",
+        "description": "Ages 4 years and up",
+        "categories": [
+          "Pre-K"
+        ],
+        "previous_tier":{
+          "_id": "58ececde27667b0004d92d85",
+          "name":"Toddler - 2 year",
+          "cut_off_age":{
+            "months": 48
+          }
+        },
+        "next_tier": null,
+        "location":{
+          "_id":"58dd4dfeb5582720e926dc50",
+          "name":"Canterbury West"
+        },
+        "tags": [
+          "pre-k"
+        ],
+        "priceTaxExcl": 800,
+        "priceTaxIncl": 80,
+        "taxRate": 0,
+        "totalEnrollment": 9,
+        "active": true
+      }
+    ]
+}

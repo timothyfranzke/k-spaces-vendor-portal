@@ -1,0 +1,95 @@
+<div id="e-commerce-orders" class="page-layout carded fullwidth" layout="row">
+
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg md-accent-bg"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center" layout="column" flex>
+
+    <!-- CONTENT HEADER -->
+    <div class="header" layout="row" layout-align="space-between center">
+      <div class="white-fg" layout="column" layout-align="start start">
+        <div class="h1" layout="row" layout-align="start center">
+          <md-icon class="material-icons">account_balance</md-icon>
+          <span translate="EC.LOCATIONS">Locations</span>
+        </div>
+        <div class="order-count secondary-text">
+          <span translate="EC.TOTAL_LOCATIONS">Total Locations:</span>
+          <span>{{vm.locations.length}}</span>
+        </div>
+      </div>
+
+      <div class="search" layout="row" layout-align="start center" flex>
+        <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
+        <input id="e-commerce-products-search" class="search-input" type="text" placeholder="Search"
+               translate translate-attr-placeholder="EC.SEARCH" flex>
+      </div>
+      <div>
+        <md-button class="blueButton" ng-click="vm.gotoLocationCreate()">
+          <span translate="EC.ADD_LOCATION">Add Location</span>
+        </md-button>
+      </div>
+    </div>
+    <!-- / CONTENT HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content-card" layout="column" flex>
+
+      <!-- CONTENT TOOLBAR -->
+
+      <!-- / CONTENT TOOLBAR -->
+
+      <!-- CONTENT -->
+      <div class="content fullpage-datatable" layout="column" flex>
+
+        <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstance"
+               dt-options="vm.dtOptions">
+          <thead>
+          <tr>
+            <th></th>
+            <th class="secondary-text">
+              <div class="table-header">
+                <span class="column-title">Name</span>
+              </div>
+            </th>
+            <th class="secondary-text">
+              <div class="table-header">
+                <span class="column-title">Actions</span>
+              </div>
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="location in ::vm.locations">
+            <td>
+              <img src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="!location.hasImage" />
+              <img data-ng-src="{{location.avatar.thumb}}" data-err-src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="location.hasImage" />
+            </td>
+            <td>
+              {{location.name}}
+            </td>
+            <td>
+              <md-button class="edit-button md-icon-button" ng-click="vm.goToLocationDetail(location._id)" aria-label="Location details"
+                         translate translate-attr-aria-label="EC.LOCATION_DETAILS">
+                <md-icon class="material-icons">edit</md-icon>
+              </md-button>
+              <md-button class="edit-button md-icon-button" ng-click="vm.deleteLocation(location, $event)" aria-label="Location details"
+                         translate translate-attr-aria-label="EC.LOCATION_DETAILS">
+                <md-icon class="material-icons">delete</md-icon>
+              </md-button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+      </div>
+      <!-- / CONTENT -->
+
+    </div>
+    <!-- / CONTENT CARD -->
+
+  </div>
+  <!-- / CENTER -->
+
+</div>

@@ -1,0 +1,140 @@
+<div id="e-commerce-product" class="page-layout simple tabbed" layout="column">
+
+  <div class="header sectionHeaderMain" layout="row" layout-align="space-between center">
+    <div class="white-fg" layout="column" layout-align="start start">
+      <div class="h1" layout="row" layout-align="start center">
+        <h1>{{vm.product.name}}</h1>
+      </div>
+    </div>
+    <div>
+      <md-button type="submit" class="md-raised md-accent" aria-label="Submit"
+                 translate="EC.SAVE" ng-disabled="location.$invalid || location.$pristine" ng-click="vm.saveProduct()">
+        Save
+      </md-button>
+    </div>
+  </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT -->
+    <div class="content">
+
+        <md-tabs md-dynamic-height>
+
+            <md-tab>
+                <md-tab-label>
+                    <span translate="EC.BASIC_INFO">Basic Info</span>
+                </md-tab-label>
+
+                <md-tab-body>
+                    <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
+                        <form id="productForm" name="productForm">
+                            <md-input-container class="md-block">
+                                <label>Tier Name</label>
+                                <input type="text" ng-model="vm.product.name" required>
+                            </md-input-container>
+                          <md-input-container class="md-block">
+                            <label>Description (product)</label>
+                            <textarea ng-model="vm.product.description" md-maxlength="150" max-rows="5"></textarea>
+                          </md-input-container>
+                          <!--<md-input-container class="md-block md-icon-float" flex="35">
+                            <label translate="EC.NEXT_TIER">Next Tier</label>
+                            <md-select ng-model="vm.product.next_tier">
+                              <md-option ng-repeat="tier in ::vm.products" ng-value="tier">
+                                {{tier.name}}
+                              </md-option>
+                            </md-select>
+                          </md-input-container>-->
+                          <md-input-container flex>
+                            <label>Location</label>
+                            <md-select ng-model="vm.product.location_id">
+                              <md-option ng-repeat="location in vm.locations" value="{{location._id}}">
+                                {{location.name}}
+                              </md-option>
+                            </md-select>
+                          </md-input-container>
+                          <md-input-container class="md-block md-icon-float">
+                            <label>Tuition Rate</label>
+                            <md-icon md-font-icon="icon icon-currency-usd"></md-icon>
+                            <input type="number" step="0.01" ng-model="vm.product.priceTaxIncl">
+                          </md-input-container>
+                        </form>
+                    </div>
+                </md-tab-body>
+            </md-tab>
+          <md-tab>
+            <md-tab-label>
+              <span>Enrolled Students</span>
+            </md-tab-label>
+
+            <md-tab-body>
+              <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
+                <form>
+                  <div layout="row" layout-align="space-between start" >
+                    <md-autocomplete
+                      flex="100"
+                      md-no-cache="true"
+                      md-selected-item="vm.selectedStudent"
+                      md-search-text-change="vm.search(searchText)"
+                      md-search-text="searchText"
+                      md-selected-item-change="vm.selectStudent(item)"
+                      md-items="item in vm.items"
+                      md-item-text="item.legal_name.first"
+                      md-min-length="0"
+                      placeholder="Add Student (Search Student Name)">
+                      <md-item-template>
+                        <span md-highlight-text="searchText" md-highlight-flags="^i">{{item.legal_name.first}} {{item.legal_name.last}}</span>
+                      </md-item-template>
+                      <md-not-found>
+                        No users matching "{{searchText}}" were found.
+                      </md-not-found>
+                    </md-autocomplete>
+                  </div>
+                </form>
+              </div>
+              <div class="content fullpage-datatable" layout="column" flex>
+                <table class="dataTable row-border hover">
+                  <thead>
+                  <tr>
+                    <th></th>
+                    <th class="secondary-text">
+                      <div class="table-header">
+                        <span class="column-title">Name</span>
+                      </div>
+                    </th>
+                    <th class="secondary-text">
+                      <div class="table-header">
+                        <span class="column-title">Actions</span>
+                      </div>
+                    </th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr ng-repeat="user in vm.tierStudents">
+                    <td>
+                      <img src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="!location.hasImage" />
+                      <img data-ng-src="{{user.avatar.thumb}}" data-err-src="assets/images/avatars/profile.jpg" class="avatar" width="49" height="50" ng-show="location.hasImage" />
+                    </td>
+                    <td>
+                      {{user.legal_name.first}} {{user.legal_name.last}}
+                    </td>
+                    <td>
+                      <md-button class="edit-button md-icon-button" ng-click="vm.removeStudentFromTier(user._id)" aria-label="Space details"
+                                 translate translate-attr-aria-label="EC.LOCATION_DETAILS">
+                        <md-icon class="material-icons">close</md-icon>
+                      </md-button>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+
+              </div>
+            </md-tab-body>
+          </md-tab>
+        </md-tabs>
+
+      </md-tabs>
+
+    </div>
+    <!-- / CONTENT -->
+
+</div>

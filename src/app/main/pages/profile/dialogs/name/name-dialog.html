@@ -1,0 +1,74 @@
+<!-- DIALOG -->
+<md-dialog class="contact-dialog" aria-label="New Task">
+
+  <form name="contactForm" class="md-inline-form" novalidate>
+      <!-- TOOLBAR TOP -->
+      <div class="md-accent md-toolbar-tools md-toolbar-tools-top" layout="row" layout-align="space-between center">
+        <span class="title">{{vm.title}}</span>
+        <md-button class="md-icon-button" ng-click="vm.cancelDialog()" aria-label="Close dialog" translate
+                   translate-attr-aria-label="CONTACTS.CLOSE_DIALOG">
+          <md-icon class="material-icons">close</md-icon>
+        </md-button>
+      </div>
+      <!-- / TOOLBAR TOP -->
+    <!-- / DIALOG TOOLBAR -->
+
+    <!-- DIALOG CONTENT -->
+    <md-dialog-content ms-scroll>
+
+      <md-input-container class="md-icon-float md-block">
+        <label>First Name</label>
+        <md-icon class="material-icons"></md-icon>
+        <input phone-input ng-model="vm.user.legal_name.first" type="text" ng-required md-autofocus>
+      </md-input-container>
+
+      <md-input-container class="md-icon-float md-block">
+        <label>Middle Name</label>
+        <md-icon></md-icon>
+        <input ng-model="vm.user.legal_name.middle" type="text">
+      </md-input-container>
+
+      <md-input-container class="md-icon-float md-block">
+        <label>Address Line Two</label>
+        <md-icon></md-icon>
+        <input ng-model="vm.user.legal_name.first" type="text">
+      </md-input-container>
+
+      <md-input-container class="md-icon-float md-block">
+        <label>City</label>
+        <md-icon></md-icon>
+        <input ng-model="vm.user.address.city" type="text">
+      </md-input-container>
+
+      <md-input-container class="md-icon-float md-block">
+        <label>State</label>
+        <md-icon></md-icon>
+        <input ng-model="vm.user.address.state" type="text">
+      </md-input-container>
+
+      <md-input-container class="md-icon-float md-block">
+        <label>Zip Code</label>
+        <md-icon></md-icon>
+        <input ng-model="vm.user.address.zip" type="text">
+      </md-input-container>
+
+    </md-dialog-content>
+    <!-- / DIALOG CONTENT -->
+
+    <!-- DIALOG ACTIONS -->
+    <md-dialog-actions layout="row" layout-align="space-between center">
+      <div layout="row" layout-align="start center">
+        <md-button type="submit" ng-click="vm.saveProfile()"
+                   class="send-button md-accent md-raised"
+                   ng-disabled="contactForm.$invalid || contactForm.$pristine"
+                   aria-label="SAVE" translate="CONTACTS.SAVE" translate-attr-aria-label="CONTACTS.SAVE">
+          SAVE
+        </md-button>
+      </div>
+    </md-dialog-actions>
+    <!-- / DIALOG ACTIONS -->
+
+  </form>
+
+</md-dialog>
+<!-- / DIALOG -->
